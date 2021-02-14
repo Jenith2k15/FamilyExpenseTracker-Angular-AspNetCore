@@ -1,0 +1,29 @@
+mat-grid-tile {
+    background:   rgba(0,0,0,0.3)
+  }
+
+  ::ng-deep .mat-form-field-infix{
+      width: 460px !important;
+      text-transform: uppercase;
+  }
+
+  table {
+    width: 90%;
+  }
+
+  .familyMemberForm{
+    background-color:hsl(220, 33%, 98%);
+    width: 90%;
+    height: 80%;
+    margin: 10px;
+  }
+
+  mat-grid-list{
+    height: 100%;
+  }
+
+  /* input.form-control,input.form-control:focus{
+    background-color: white !important;
+    color: black;
+    border: 1px solid #636b7b;
+} */

@@ -1,0 +1,8 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand text-white">Family Expense Tracker</a>
+    <a class="navbar-brand text-white ml-auto" *ngIf="userDetails.isAdmin" routerLink="/home">Home</a>
+    <a class="navbar-brand text-white ml-auto font-weight-bold font-italic" *ngIf="userDetails.isAdmin">Welcome admin {{userDetails.userName}}</a>
+    <a class="navbar-brand text-white ml-auto font-weight-bold font-italic" *ngIf="!userDetails.isAdmin">Welcome user {{userDetails.userName}}</a>
+    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
+  </nav>
+  <router-outlet></router-outlet>
