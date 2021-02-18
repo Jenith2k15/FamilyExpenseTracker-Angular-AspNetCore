@@ -27,13 +27,16 @@ export class RegistrationComponent implements OnInit {
           this.toastr.success('New user created!', 'Registration successful.');
         } else {
           res.errors.forEach(element => {
+            console.log('Hai');
             switch (element.code) {
               case 'DuplicateUserName':
+                this.showLoadingIndiacator = false;
                 console.log(element.code)
                 this.toastr.error('Username is already taken','Registration failed.');
                 break;
 
               default:
+                this.showLoadingIndiacator = false;
               this.toastr.error(element.description,'Registration failed.');
                 break;
             }

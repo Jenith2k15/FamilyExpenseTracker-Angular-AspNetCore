@@ -23,11 +23,10 @@ namespace FamilyExpenseTrakerService.Models
             
         //}
 
-        public async Task<IdentityResult> ValidateNewUser(string familyName,string email)
+        public async Task<IdentityResult> ValidateNewUser(string familyName,string email,string userName)
         {
-            var familyNameCount = _context.FamilyMasters.Count(fm => fm.FamilyName == familyName);
+            
             var familyMember = await _userManager.FindByEmailAsync(email);
-
             if (familyMember != null)
             {
                 base.Succeeded = false;
@@ -40,6 +39,7 @@ namespace FamilyExpenseTrakerService.Models
                 });
             }
 
+            var familyNameCount = _context.FamilyMasters.Count(fm => fm.FamilyName == familyName);
             if (familyNameCount > 0)
             {
                 base.Succeeded = false;
@@ -52,7 +52,20 @@ namespace FamilyExpenseTrakerService.Models
                 });
             }
 
-            
+            var user = _context.FamilyMembers.FirstOrDefault(fm => fm.UserName == userName);
+
+            if (user != null)
+            {
+                base.Succeeded = false;
+                return Failed(new IdentityError[]
+                { new IdentityError
+                    {
+                      Code="UserNameAlreadyTaken",
+                      Description=$"User name {user.UserName} is already taken."
+                    }
+                });
+            }
+
             return Success;
         }
     }

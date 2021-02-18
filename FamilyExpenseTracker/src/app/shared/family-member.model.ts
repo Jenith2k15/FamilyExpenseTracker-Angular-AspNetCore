@@ -4,4 +4,5 @@ export class FamilyMember{
     mobileNo='';
     work='';
     income='';
+    password='';
 }

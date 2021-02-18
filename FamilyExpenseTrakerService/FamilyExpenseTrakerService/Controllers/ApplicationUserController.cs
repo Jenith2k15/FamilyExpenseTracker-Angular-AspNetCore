@@ -44,7 +44,7 @@ namespace FamilyExpenseTrakerService.Controllers
         {
             try
             {
-                var validationResult = await _familyExpenseTrackerRepo.ValidateNewUser(newUser.FamilyName, newUser.Email);
+                var validationResult = await _familyExpenseTrackerRepo.ValidateNewUser(newUser.FamilyName, newUser.Email,newUser.UserName);
 
                 if(!validationResult.Succeeded)
                 {
@@ -69,16 +69,20 @@ namespace FamilyExpenseTrakerService.Controllers
                 //Insert new user into AspNetUsers table
                 var createResult = await _userManager.CreateAsync(familyMember, newUser.Password);
 
-                //Make first user as Admin in AspNetRoles table if user is 1st user of FamilyName is Unique
-                familyMember = await _userManager.FindByIdAsync(familyMember.Id);
-                int firstUserForFamily = _context.FamilyMembers.Where(fm => fm.FamilyId == familyMember.FamilyId ).Count();
-                if (firstUserForFamily == 1)
+                if (createResult.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(familyMember, "Admin");
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(familyMember, "User");
+                    //Make first user as Admin in AspNetRoles table if user is 1st user of FamilyName is Unique
+                    familyMember = await _userManager.FindByIdAsync(familyMember.Id);
+                    int firstUserForFamily = _context.FamilyMembers.Where(fm => fm.FamilyId == familyMember.FamilyId).Count();
+                    if (firstUserForFamily == 1)
+                    {
+                        await _userManager.AddToRoleAsync(familyMember, "Admin");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(familyMember, "User");
+                    }
+                    return Ok(createResult);
                 }
                 return Ok(createResult);
             }

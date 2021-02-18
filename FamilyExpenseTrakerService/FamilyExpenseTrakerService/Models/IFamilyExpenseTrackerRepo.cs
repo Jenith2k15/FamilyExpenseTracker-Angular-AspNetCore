@@ -8,7 +8,7 @@ namespace FamilyExpenseTrakerService.Models
 {
     public interface IFamilyExpenseTrackerRepo
     {
-        Task<IdentityResult> ValidateNewUser(string familyName,string email);
+        Task<IdentityResult> ValidateNewUser(string familyName,string email,string userName);
        //Task<IdentityResult> AddNewUser(ApplicationNewUserModel newUser);
     }
 }

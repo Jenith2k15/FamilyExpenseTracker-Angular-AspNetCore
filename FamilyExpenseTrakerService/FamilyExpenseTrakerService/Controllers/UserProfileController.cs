@@ -30,7 +30,7 @@ namespace FamilyExpenseTrakerService.Controllers
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var userData = await _userManager.FindByIdAsync(userId);
             var userRole = await _userManager.GetRolesAsync(userData);
-            var isAdmin = userRole[0]=="Admin"?true:false;
+            bool? isAdmin = userRole[0]=="Admin"?true:false;
             return new { userData.UserName,userData.Email,isAdmin };
         }
         
